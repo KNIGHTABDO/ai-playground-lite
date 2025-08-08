@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ChatGPT-inspired Dark Theme Design System */
+/* Premium ChatGPT-inspired Dark Theme Design System */
 
 @layer base {
   :root {
@@ -45,59 +45,23 @@
     --chat-input: 224 12% 15%;
     --chat-hover: 224 12% 18%;
     
-    /* Gradients */
+    /* Enhanced Gradients */
     --gradient-primary: linear-gradient(135deg, hsl(142 76% 36%), hsl(142 76% 42%));
     --gradient-background: linear-gradient(180deg, hsl(224 20% 8%), hsl(224 15% 10%));
+    --gradient-message: linear-gradient(135deg, hsl(224 12% 15%), hsl(224 12% 18%));
+    --gradient-glow: radial-gradient(circle at center, hsl(142 76% 36% / 0.3), transparent 70%);
     
-    /* Animations */
+    /* Premium Animations */
     --transition-smooth: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-bounce: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --transition-elastic: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    
+    /* Enhanced Shadows */
+    --shadow-soft: 0 4px 20px -4px hsl(224 20% 8% / 0.4);
+    --shadow-medium: 0 8px 30px -8px hsl(224 20% 8% / 0.6);
+    --shadow-strong: 0 20px 40px -12px hsl(224 20% 8% / 0.8);
+    --shadow-glow: 0 0 40px hsl(142 76% 36% / 0.3);
 
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -115,6 +79,25 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
+  }
+}
+
+@layer components {
+  .chat-scroll::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .chat-scroll::-webkit-scrollbar-track {
+    background: hsl(var(--chat-sidebar));
+  }
+  
+  .chat-scroll::-webkit-scrollbar-thumb {
+    background: hsl(var(--muted-foreground) / 0.3);
+    border-radius: 3px;
+  }
+  
+  .chat-scroll::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted-foreground) / 0.5);
   }
 }

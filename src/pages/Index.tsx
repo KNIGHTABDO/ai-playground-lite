@@ -69,6 +69,57 @@ const Index = () => {
     setMessages(selectedChat?.messages || []);
   };
 
+  const handleDeleteChat = (chatId: string) => {
+    setChats(prev => prev.filter(chat => chat.id !== chatId));
+    if (activeChat === chatId) {
+      const remainingChats = chats.filter(chat => chat.id !== chatId);
+      if (remainingChats.length > 0) {
+        setActiveChat(remainingChats[0].id);
+        setMessages(remainingChats[0].messages);
+      } else {
+        setActiveChat(null);
+        setMessages([]);
+      }
+    }
+  };
+
+  const handleRenameChat = (chatId: string, newTitle: string) => {
+    setChats(prev => prev.map(chat => 
+      chat.id === chatId ? { ...chat, title: newTitle } : chat
+    ));
+  };
+
+  const handleRegenerateMessage = (messageId: string) => {
+    // Find and regenerate the specific message
+    const messageIndex = messages.findIndex(m => m.id === messageId);
+    if (messageIndex !== -1) {
+      const responses = [
+        "Here's an alternative perspective on your question...",
+        "Let me approach this differently and provide another viewpoint...",
+        "I can offer a fresh take on this topic...",
+        "Allow me to reconsider and give you an updated response..."
+      ];
+      
+      const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+      const updatedMessage = {
+        ...messages[messageIndex],
+        content: randomResponse,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      };
+      
+      const newMessages = [...messages];
+      newMessages[messageIndex] = updatedMessage;
+      setMessages(newMessages);
+      
+      // Update chat in chats array
+      setChats(prev => prev.map(chat => 
+        chat.id === activeChat 
+          ? { ...chat, messages: newMessages }
+          : chat
+      ));
+    }
+  };
+
   const handleSendMessage = (content: string) => {
     const newMessage: Message = {
       id: Date.now().toString(),
@@ -93,17 +144,20 @@ const Index = () => {
   };
 
   return (
-    <div className="h-screen flex bg-chat-background text-foreground">
+    <div className="h-screen flex bg-gradient-background text-foreground overflow-hidden">
       <ChatSidebar
         chats={chats}
         activeChat={activeChat}
         onNewChat={handleNewChat}
         onSelectChat={handleSelectChat}
+        onDeleteChat={handleDeleteChat}
+        onRenameChat={handleRenameChat}
       />
       <ChatInterface
         chatId={activeChat}
         messages={messages}
         onSendMessage={handleSendMessage}
+        onRegenerateMessage={handleRegenerateMessage}
       />
     </div>
   );
